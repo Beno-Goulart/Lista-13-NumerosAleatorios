@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício Usuario</title>
+</head>
+<body>
+    Quantos números vocẽ quer?<input type="number" name="" id="ipt_numero"><br>
+    <button onclick="sortear()">Mostrar Números</button><br>
+    <div id="div"></div>
+</body>
+</html>
+<script>
+    function sortear() {
+        div.innerHTML = ""
+        var ax_numero = ipt_numero.value;
+        for (var index = 0; index < ax_numero; index++) {
+            var numero = (Math.random()*3+10).toFixed(1)
+            div.innerHTML += `${numero} <br>`
+        }
+    }
+</script>

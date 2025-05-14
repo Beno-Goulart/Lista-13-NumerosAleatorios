@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 7</title>
+</head>
+
+<body>
+    <button onclick="nota()">Gerar uma nota de aluno entre 0 e 10</button>
+    <div id="boletim"></div><br>
+    <button onclick="frequencia()">Gerar uma frequência de aluno entre 0 e 100</button><br>
+    <div id="recorrencia"></div><br>
+    <button onclick="aprovado()">Aprovado</button>
+    <div id="aprovacao"></div>
+</body>
+
+</html>
+<script>
+    var valorNota = 0;
+    var valorFrequecia = 0;
+    function nota() {
+        valorNota = (Math.random() * 10).toFixed(2);
+        boletim.innerHTML = `O aluno é nota ${valorNota}!`;
+    }
+
+    function frequencia() {
+        valorFrequecia = (Math.random() * 100).toFixed(2);
+        recorrencia.innerHTML = `O aluno tem uma frequência de ${valorFrequecia}% !`;
+    }
+
+    function aprovado() {
+        if (valorNota < 6 && valorFrequecia < 75) {
+            aprovacao.innerHTML = "Aluno completamente REPROVADO"
+        }
+        else if (valorNota < 6) {
+            aprovacao.innerHTML = `Aluno REPROVADO por nota!`;
+        }
+        else if (valorFrequecia < 75) {
+            aprovacao.innerHTML = `Aluno REPROVADO por frequência!`;
+        }
+        else {
+            aprovacao.innerHTML = `APROVADO!`;
+        }
+    }
+</script>

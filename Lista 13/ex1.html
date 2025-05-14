@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 1</title>
+</head>
+<body>
+    <H2>Sorteador</H2>
+    <button onclick="sortear()">Sortear</button>
+    <div id="div"></div>
+</body>
+</html>
+<script>
+    function sortear() {
+        var sorteado = Math.random()
+        if (sorteado > 0.5 ) {
+            div.innerHTML = `${sorteado} <br> Eu arredondaria para 1`
+        }else{
+            div.innerHTML = `${sorteado} <br> Eu arredondaria para 0`
+        }
+    }
+</script>

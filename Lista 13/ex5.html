@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 5</title>
+</head>
+<body>
+    <H2>Sortei de Horário!!</H2>
+    <button onclick="sortear()">Sortear momento do dia</button>
+    <div id="div"></div>
+</body>
+</html>
+<script>
+    function sortear() {
+        var sorteado = (Math.random() * 24).toFixed(0)
+        if (sorteado >= 0 && sorteado <= 11) {
+            div.innerHTML = `Bom dia, flor do dia, são ${sorteado}h! <br>`
+        }else if (sorteado >= 12 && sorteado <= 17) {
+            div.innerHTML = `Boa tarde, já vai tarde! São ${sorteado}h! <br>`
+        }else if (sorteado >=18 && sorteado <= 23){
+            div.innerHTML = `Boa noite, durma bem! São ${sorteado}h! <br>`
+        }
+    }
+</script>

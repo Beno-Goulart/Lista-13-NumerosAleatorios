@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 4</title>
+</head>
+<body>
+    <H2>JOOOKEEEEENPO!!</H2>
+    <button onclick="sortear()">Jokenpo</button>
+    <div id="div"></div>
+</body>
+</html>
+<script>
+    function sortear() {
+        var sorteado = (Math.random() * 3+1).toFixed(1)
+        if (sorteado < 2) {
+            div.innerHTML = `Pedra <br>`
+        }else if (sorteado > 2 && sorteado < 3) {
+            div.innerHTML = `Papel <br>`
+        }else{
+            div.innerHTML = `Tesoura <br>`
+        }
+        div.innerHTML += `${sorteado}`
+    }
+</script>

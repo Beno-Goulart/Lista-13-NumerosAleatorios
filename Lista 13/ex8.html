@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 8</title>
+</head>
+
+<body>
+    <H2>JOOOKEEEEENPO!!</H2>
+    <button onclick="player1()">Jogador 1</button>
+    <div id="playerum"></div><br>
+    <button onclick="player2()">Jogador 2</button>
+    <div id="playerdois"></div><br>
+
+    <div id="final"></div>
+</body>
+
+</html>
+<script>
+    var maoPlayerum = "";
+    var maoPlayerdois = "";
+
+    function player1() {
+        var valor = (Math.random() * 3)
+        if (valor < 1) {
+            maoPlayerum = "Pedra";
+        } else if (valor < 2) {
+            maoPlayerum = "Papel";
+        } else {
+            maoPlayerum = "Tesoura";
+        }
+        playerum.innerHTML = `Jogador 1 escolheu: ${maoPlayerum} <br>`
+        resultado();
+    }
+
+    function player2() {
+        var valor = (Math.random() * 3)
+        if (valor < 1) {
+            maoPlayerdois = "Pedra";
+        } else if (valor < 2) {
+            maoPlayerdois = "Papel";
+        } else {
+            maoPlayerdois = "Tesoura";
+        }
+        playerdois.innerHTML = `Jogador 2 escolheu: ${maoPlayerdois} <br>`
+        resultado();
+    }
+
+    function resultado() {
+        if (maoPlayerum == "" || maoPlayerdois == "") {
+            final.innerHTML = `<span style="color: red">Ambos os jogadores devem jogar!`;
+        }
+        else if (maoPlayerum == maoPlayerdois) {
+            final.innerHTML = "Empate!"
+        }
+        else if ((maoPlayerum == "Pedra" && maoPlayerdois == "Tesoura") ||
+            (maoPlayerum == "Papel" && maoPlayerdois == "Pedra") ||
+            (maoPlayerum == "Tesoura" && maoPlayerdois == "Papel")) {
+            final.innerHTML = "Jogador 1 Venceu!"
+
+        } else {
+            final.innerHTML = "Jogador 2 Venceu!"
+        }
+    }
+</script>

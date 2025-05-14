@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício Temperatura</title>
+</head>
+<body>
+    <H2>Sorteador</H2>
+    <button onclick="sortear()">Sortear</button>
+    <div id="div"></div>
+</body>
+</html>
+<script>
+    function sortear() {
+        var sorteado = ((Math.random() * 3) + 10).toFixed(1)
+        div.innerHTML = `${sorteado}`
+    }
+</script>
