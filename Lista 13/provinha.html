@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício Estilo Prova</title>
+</head>
+
+<body>
+    <H2>JOOOKEEEEENPO!!</H2>
+    Jogador <input placeholder="Ex: 1" type="number" name="" id="ipt_jogador"><br><br>
+    De <input placeholder="Ex: 1" type="number" name="" id="ipt_inicio">
+    Até <input placeholder="Ex: 5" type="number" name="" id="ipt_fim"><br><br>
+    <button onclick="jogar()">Jogar</button>
+    <button onclick="jogador()">Jogador</button>
+    <button onclick="sorteado()">Sortado</button>
+    <div id="playerum"></div><br>
+    <div id="playerdois"></div><br>
+
+    <div id="final"></div><br>
+    <div id="player"></div>
+</body>
+
+</html>
+<script>
+    var maoPlayerum = "";
+    var maoPlayerdois = "";
+    var vitoriaPlayerum = 0;
+    var vitoriaPlayerdois = 0;
+    var empate = 0;
+    var contPedra = 0;
+    var contPapel = 0;
+    var contTesoura = 0;
+    var i = 0;
+    var vt_resumo = [];
+    var vt_jogador1 = [];
+    var vt_jogador2 = [];
+
+    function jogar() {
+        player1();
+        player2();
+        resultado();
+        rodadas();
+        filtrar();
+    }
+    function player1() {
+        var valor = (Math.random() * 3)
+        if (valor < 1) {
+            maoPlayerum = "Pedra";
+            contPedra++;
+        } else if (valor < 2) {
+            maoPlayerum = "Papel";
+            contPapel++;
+        } else {
+            maoPlayerum = "Tesoura";
+            contTesoura++;
+        }
+        playerum.innerHTML = `Jogador 1 - ${maoPlayerum} <br>`
+    }
+
+    function player2() {
+        var valor = (Math.random() * 3)
+        if (valor < 1) {
+            maoPlayerdois = "Pedra";
+            contPedra++;
+        } else if (valor < 2) {
+            maoPlayerdois = "Papel";
+            contPapel++;
+        } else {
+            maoPlayerdois = "Tesoura";
+            contTesoura++;
+        }
+        playerdois.innerHTML = `Jogador 2 escolheu: ${maoPlayerdois} <br>`
+    }
+
+    function resultado() {
+        i++
+        if (maoPlayerum == "" || maoPlayerdois == "") {
+            final.innerHTML = `<span style="color: red">Ambos os jogadores devem jogar!<br>`;
+        }
+        else if (maoPlayerum == maoPlayerdois) {
+            final.innerHTML = `Não houve vencedor, pois os dois jogadores tiraram ${maoPlayerum}.<br>`
+            vt_resumo.push("Empatou")
+            empate++
+        }
+        else if ((maoPlayerum == "Pedra" && maoPlayerdois == "Tesoura") ||
+            (maoPlayerum == "Papel" && maoPlayerdois == "Pedra") ||
+            (maoPlayerum == "Tesoura" && maoPlayerdois == "Papel")) {
+            final.innerHTML = `Jogador 1 Venceu! pois ${maoPlayerum} vence de ${maoPlayerdois}<br>`
+            vitoriaPlayerum++
+            vt_resumo.push("Jogador 1 Venceu!")
+            vt_jogador1.push(i)
+        } else {
+            final.innerHTML = `Jogador 2 Venceu! pois ${maoPlayerdois} vence de ${maoPlayerum}<br>`
+            vitoriaPlayerdois++
+            vt_resumo.push(`Jogador 2 Venceu!`)
+            vt_jogador2.push(i)
+        }
+        final.innerHTML += `<br>Fim da ${i}° Partida!<br><br>`
+    }
+
+    function rodadas() {
+        var totalPartida = (vitoriaPlayerdois + vitoriaPlayerum + empate)
+        final.innerHTML += `Jogador 1 – ${vitoriaPlayerum} vitorias, ${empate} empates e ${vitoriaPlayerdois} derrotas – Suas vitórias representam ${((vitoriaPlayerum * 100) / totalPartida).toFixed(1)}% das partidas <br>
+Jogador 2 – ${vitoriaPlayerdois} vitorias, ${empate} empates e ${vitoriaPlayerum} derrotas – Suas vitórias representam ${((vitoriaPlayerdois * 100) / totalPartida).toFixed(1)}% das partidas.<br><br>`
+    }
+
+    function filtrar() {
+        var ax_inicio = ipt_inicio.value;
+        var ax_fim = ipt_fim.value;
+        if (ax_inicio < 1 || ax_fim < 1) {
+            final.innerHTML += `<span style="color: red">O intervalo não pode estar vazio!<br>`
+        } else if (ax_fim > vt_resumo.length) {
+            final.innerHTML += `<span style="color: red">O final do intervalo não pode ser maior que o número de partidas jogadas!<br><br>`
+        } else {
+            for (var intervalo = ax_fim -1; intervalo >= ax_inicio; intervalo--) {
+                final.innerHTML += `Resultado da ${intervalo} partida ${vt_resumo[intervalo]} <br>`
+            }
+        }
+    }
+
+    function sorteado() {
+        var maisSorteado = contPedra;
+        var menosSorteado = contPedra;
+        var maior = "Pedra"
+        var menor = "Pedra"
+        if (contPedra == 0 && contPapel == 0 && contTesoura == 0) {
+
+        }
+        if (contPapel > maisSorteado) {
+            maisSorteado = contPapel;
+            maior = "Papel"
+        } else if (contPapel < menosSorteado) {
+            menosSorteado = contPapel;
+            menor = "Papel"
+        } else if (contTesoura > maisSorteado) {
+            maisSorteado = contTesoura;
+            maior = "Tesoura"
+        } else if (contTesoura < menosSorteado) {
+            menosSorteado = contTesoura;
+            menor = "Tesoura"
+        }
+
+        final.innerHTML += `<br> O item mais sorteado foi ${maior} sendo ${maisSorteado} vezes! <br>
+        O item menor sorteado foi ${menor} sendo ${menosSorteado} vezes! <br>`
+    }
+
+    function jogador() {
+        var jogador = ipt_jogador.value;
+        player.innerHTML = ``
+        if (jogador == 0) {
+            player.innerHTML += `<span style="color: red">Informe um jogador!<br>`
+        } else if (vt_jogador1.length == 0 || vt_jogador2.length == 0) {
+            final.innerHTML = `<span style="color: red">Não teve sorteio ainda!`
+        } else if (jogador == 1) {
+            player.innerHTML += `O jogador 1 venceu <br>`
+            for (var index = 0; index < vt_jogador1.length; index++) {
+                player.innerHTML += `na ${vt_jogador1[index]}° partida <br>`
+            }
+        } else {
+            player.innerHTML += `O jogador 2 venceu <br>`
+            for (var index = 0; index < vt_jogador2.length; index++) {
+                player.innerHTML += `na ${vt_jogador2[index]}° partida <br>`
+            }
+        }
+    }
+</script>
