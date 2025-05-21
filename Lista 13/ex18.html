@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício 18</title>
+</head>
+
+<body>
+    <h2>Corrida FIVE TURTLES</h2>
+
+    Nome do participante:
+    <input type="text" id="ipt_participante" placeholder="Digite o nome"><br><br>
+    <button onclick="adicionar()">Adicionar Participante</button><br><br>
+
+    Distância da prova (5 a 42 km):
+    <input type="number" id="ipt_distancia"><br><br>
+
+    <button onclick="largada()">Dar a largada</button><br><br>
+
+    <div id="lista"></div><br>
+    <div id="resultado"></div>
+</body>
+
+</html>
+<script>
+    var vt_participantes = [];
+
+    function adicionar() {
+        var nome = ipt_participante.value.trim();
+        if (nome == "") {
+            alert("Digite um nome válido.");
+            return;
+        }
+        if (vt_participantes.length >= 5) {
+            alert("Você já inseriu os 5 participantes.");
+            return;
+        }
+        vt_participantes.push(nome);
+        ipt_participante.value = "";
+        lista.innerHTML = "Participantes:<br>";
+        for (var i = 0; i < vt_participantes.length; i++) {
+            lista.innerHTML += (i + 1) + ". " + vt_participantes[i] + "<br>";
+        }
+    }
+    function largada() {
+        var distancia = Number(ipt_distancia.value);
+        resultado.innerHTML = "";
+        if (vt_participantes.length < 5) {
+            alert("Você precisa adicionar 5 participantes antes de iniciar a corrida.");
+            return;
+        }
+        if (distancia == 0 || distancia < 5 || distancia > 42) {
+            alert("Informe uma distância válida entre 5 e 42 km.");
+            return;
+        }
+        var vt_tempos = [];
+        for (var i = 0; i < 5; i++) {
+            vt_tempos[i] = [];
+        }
+        var vt_acumulados = [0, 0, 0, 0, 0];
+        var melhorTempo = 99999;
+        var melhorNome = "";
+        var melhorKm = 0;
+        var piorTempo = -1;
+        var piorNome = "";
+        var piorKm = 0;
+
+        for (var km = 1; km <= distancia; km++) {
+            for (var i = 0; i < 5; i++) {
+                var tempo = Number((Math.random() * 2 + 4).toFixed(1));
+                vt_tempos[i][vt_tempos[i].length] = tempo;
+                vt_acumulados[i] += tempo;
+
+                if (tempo < melhorTempo) {
+                    melhorTempo = tempo;
+                    melhorNome = vt_participantes[i];
+                    melhorKm = km;
+                }
+                if (tempo > piorTempo) {
+                    piorTempo = tempo;
+                    piorNome = vt_participantes[i];
+                    piorKm = km;
+                }
+            }
+            if (km < distancia) {
+                var menorAcumulado = vt_acumulados[0];
+                var idxMenor = 0;
+                for (var j = 1; j < 5; j++) {
+                    if (vt_acumulados[j] < menorAcumulado) {
+                        menorAcumulado = vt_acumulados[j];
+                        idxMenor = j;
+                    }
+                }
+                alert("Km " + km + ": " + vt_participantes[idxMenor] + " está na frente com " + menorAcumulado.toFixed(1) + " minutos.");
+            }
+        }
+        var vt_nomesPodium = [];
+        var vt_temposPodium = [];
+        for (var i = 0; i < 5; i++) {
+            vt_nomesPodium[i] = vt_participantes[i];
+            vt_temposPodium[i] = vt_acumulados[i];
+        }
+        for (var i = 0; i < 4; i++) {
+            for (var j = i + 1; j < 5; j++) {
+                if (vt_temposPodium[j] < vt_temposPodium[i]) {
+                    var tempTempo = vt_temposPodium[i];
+                    vt_temposPodium[i] = vt_temposPodium[j];
+                    vt_temposPodium[j] = tempTempo;
+
+                    var tempNome = vt_nomesPodium[i];
+                    vt_nomesPodium[i] = vt_nomesPodium[j];
+                    vt_nomesPodium[j] = tempNome;
+                }
+            }
+        }
+        resultado.innerHTML += "<h3>Pódio</h3>";
+        resultado.innerHTML += "1º lugar: " + vt_nomesPodium[0] + " - " + vt_temposPodium[0].toFixed(1) + " min<br>";
+        resultado.innerHTML += "2º lugar: " + vt_nomesPodium[1] + " - " + vt_temposPodium[1].toFixed(1) + " min<br>";
+        resultado.innerHTML += "3º lugar: " + vt_nomesPodium[2] + " - " + vt_temposPodium[2].toFixed(1) + " min<br><br>";
+
+        resultado.innerHTML += "<h3>Tempos por Quilômetro (do último ao primeiro)</h3>";
+        for (var i = 0; i < 5; i++) {
+            resultado.innerHTML += vt_participantes[i] + "<br>";
+            var total = 0;
+            for (var km = distancia - 1; km >= 0; km--) {
+                total += vt_tempos[i][km];
+                resultado.innerHTML += "Km " + (km + 1) + ": " + vt_tempos[i][km] + " min | Acumulado: " + total.toFixed(1) + " min<br>";
+            }
+            resultado.innerHTML += "<br>";
+        }
+        resultado.innerHTML += "<h3>Estatísticas</h3>";
+        resultado.innerHTML += "Melhor volta: " + melhorNome + " - " + melhorTempo + " min no Km " + melhorKm + "<br>";
+        resultado.innerHTML += "Pior volta: " + piorNome + " - " + piorTempo + " min no Km " + piorKm + "<br>";
+    }
+</script>
